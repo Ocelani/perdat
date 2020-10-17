@@ -20,5 +20,6 @@ func Connect(db string) (*xorm.Engine, error) {
 		return nil, err
 	}
 	engine.SetLogger(log.NewSimpleLogger(f))
+
 	return engine, nil
 }

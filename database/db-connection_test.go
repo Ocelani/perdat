@@ -6,28 +6,31 @@ import (
 	"xorm.io/xorm"
 )
 
-type Main interface {
-	main()
+type Connection interface {
+	Connection()
 }
 
-type Connection struct {
-}
-
-// TestItem type
 type TestItem struct {
-	inputs   Connection
+	file     string
 	result   *xorm.Engine
 	hasError bool
 }
 
-func testExecute(item TestItem, t *testing.T) {
-	// get result of func()
-	_, err := run()
+func TestConnection(t *testing.T) {
+	var i = TestItem{
+		file: "perdat.db",
+	}
+	result, err := Connect(i.file)
 
-	// expected an error
-	if err == nil {
-		t.Errorf("\nFAILED!\n☐ Intersection()\n   \n- Expected: an error,\n✘ Got: value ")
+	var r interface{} = result
+	_, ok := r.(*xorm.Engine)
+
+	if err != nil {
+		t.Errorf("\nFAILED!\n☐ Connect(%v) \n- Expected: %v,\n✘ Got: %v \n", i.file, true, err)
+	}
+	if ok == true {
+		t.Logf("\nPASSED!\n☐ Connect(%v) \n- Expected: %v \n✔ Got: %v \n", i.file, true, ok)
 	} else {
-		t.Logf("\nPASSED!\n☐ Intersection()\n   \n- Expected: an error,\n✔ Got: an error \n")
+		t.Errorf("\nFAILED!\n☐ Connect(%v) \n- Expected: %v,\n✘ Got: %v \n", i.file, true, ok)
 	}
 }

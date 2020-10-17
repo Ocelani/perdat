@@ -18,8 +18,7 @@ package cmd
 import (
 	"fmt"
 
-  "github.com/spf13/cobra"
-  _ "github.com/Ocelani/perdat/database"
+	"github.com/spf13/cobra"
 )
 
 var logic = `
@@ -33,7 +32,6 @@ var addCmd = &cobra.Command{
 	Short: "perdat add <action>",
 	Long:  `Register a new entry action`,
 	Run: func(cmd *cobra.Command, args []string) {
-    db.
 		fmt.Println("add called")
 	},
 }

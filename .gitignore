@@ -1,0 +1,12 @@
+# ENV
+.env
+*.env
+./*.env
+
+# BINARY
+perdat
+./perdat
+
+# DATABASE
+perdat.db
+./perdat.db

@@ -10,16 +10,15 @@ import (
 	"xorm.io/xorm/names"
 )
 
-func Connect() *xorm.Engine {
-	engine, err := xorm.NewEngine("sqlite3", fmt.Sprintf("./perdat.db"))
+// Connect is responsible to make a connection with sqlite database.
+func Connect(db string) (*xorm.Engine, error) {
+	engine, err := xorm.NewEngine("sqlite3", fmt.Sprintf("./%s", db))
 	engine.SetMapper(names.GonicMapper{})
-
 	f, err := os.Create("sql.log")
+
 	if err != nil {
-		println(err.Error())
-		return
+		return nil, err
 	}
 	engine.SetLogger(log.NewSimpleLogger(f))
-
-	return
+	return engine, nil
 }

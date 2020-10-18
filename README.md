@@ -1,4 +1,4 @@
-![perdat](https://github.com/Ocelani/perdat/blob/master/assets/perdat_light.png?raw=true)
+![perdat](https://github.com/Ocelani/perdat/blob/master/assets/perdat_light.jpg?raw=true)
 =================
 
 A CLI tool that registers information about your daily life.

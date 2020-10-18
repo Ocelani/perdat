@@ -1,4 +1,4 @@
-![perdat](assets/perdat_light.png)
+![perdat](assets/perdat_light_2x.png)
 =========================
 
 A CLI tool that registers information about your daily life.

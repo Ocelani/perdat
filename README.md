@@ -1,4 +1,4 @@
-![perdat_light](/Users/celani/go/src/github.com/Ocelani/perdat/assets/perdat_dark.png)
+![perdat](https://github.com/Ocelani/perdat/blob/master/assets/perdat_light.png?raw=true)
 
 ---
 

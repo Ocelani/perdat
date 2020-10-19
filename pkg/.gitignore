@@ -1,0 +1,13 @@
+# ENV
+.env
+*.env
+./*.env
+
+# DATABASE
+perdat.db
+./perdat.db
+
+# INTERNAL
+perdat
+./perdat
+./internal

@@ -1,12 +1,10 @@
 # ENV
 .env
 *.env
-./*.env
 
-# BINARY
-perdat
-./perdat
+# ETC
+*.log
+./vendor
 
 # DATABASE
-perdat.db
-./perdat.db
+*.db

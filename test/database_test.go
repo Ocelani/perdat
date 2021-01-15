@@ -1,6 +1,7 @@
 package test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/Ocelani/perdat/database"
@@ -12,22 +13,42 @@ type TestItem struct {
 	hasError bool
 }
 
-func TestConnection(t *testing.T) {
-	var i = TestItem{
-		file: "perdat.db",
-	}
-
-	result, err := database.Connect(i.file)
+func Test_DBconnection(t *testing.T) {
+	var (
+		f = "perdat.db"
+		i = TestItem{
+			file:     f,
+			hasError: false,
+		}
+	)
+	result, err := database.Connect(
+		i.file, database.NewStdoutLogger())
 	if err != nil {
-		t.Errorf("\nFAILED!\n☐ Connect(%v) \n- Expected: %v,\n✘ Got: %v \n", i.file, true, err)
+		t.Errorf(`
+			FAILED!
+			☐ Connect(%v)
+			- Expected: %v
+			✘ Got: %v
+			`, i.file, true, err,
+		)
 	}
-
 	var r interface{} = result
-	_, ok := r.(*database.DB)
-
-	if ok == true {
-		t.Logf("\nPASSED!\n☐ Connect(%v) \n- Expected: %v \n✔ Got: %v \n", i.file, true, ok)
+	if _, ok := r.(*database.DB); ok == true {
+		t.Logf(`
+			PASSED!
+			☐ Connect(%v)
+			- Expected: %v
+			✔ Got: %v
+			`, i.file, true, ok,
+		)
 	} else {
-		t.Errorf("\nFAILED!\n☐ Connect(%v) \n- Expected: %v,\n✘ Got: %v \n", i.file, true, ok)
+		t.Errorf(`
+			FAILED!
+			☐ Connect(%v) 
+			- Expected: %v,
+			✘ Got: %v 
+			`, i.file, true, ok,
+		)
 	}
+	os.Remove(f)
 }

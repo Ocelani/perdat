@@ -5,24 +5,24 @@ import (
 	"testing"
 
 	"github.com/Ocelani/perdat/database"
+	"gorm.io/gorm"
 )
 
-type TestItem struct {
+type TestDB struct {
 	file     string
-	result   *database.DB
+	result   *gorm.DB
 	hasError bool
 }
 
 func Test_DBconnection(t *testing.T) {
 	var (
 		f = "perdat.db"
-		i = TestItem{
+		i = TestDB{
 			file:     f,
 			hasError: false,
 		}
 	)
-	result, err := database.Connect(
-		i.file, database.NewStdoutLogger())
+	result, err := database.Connect()
 	if err != nil {
 		t.Errorf(`
 			FAILED!
@@ -33,7 +33,7 @@ func Test_DBconnection(t *testing.T) {
 		)
 	}
 	var r interface{} = result
-	if _, ok := r.(*database.DB); ok == true {
+	if _, ok := r.(*gorm.DB); ok == true {
 		t.Logf(`
 			PASSED!
 			☐ Connect(%v)

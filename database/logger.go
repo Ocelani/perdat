@@ -10,18 +10,17 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-// NewStdoutLogger instantiates a stdout logger
-// to print the output of database operations.
+// NewStdoutLogger instantiates a stdout logger to print the output of database operations.
 func NewStdoutLogger() logger.Interface {
 	return newLogger(os.Stdout)
 }
 
-// NewFileLogger instantiates a text file
-//  logger to register database operations.
+// NewFileLogger instantiates a text file logger to register database operations.
 func NewFileLogger() (logger.Interface, error) {
-	f, err := os.Create("sql.log")
+	f, err := os.OpenFile(
+		"./internal/logs/sql.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
 	if err != nil {
-		return nil, errors.Wrap(err, "db file logger")
+		return nil, errors.Wrap(err, "DB file logger")
 	}
 	return newLogger(f), nil
 }

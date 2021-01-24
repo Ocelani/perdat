@@ -21,31 +21,29 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var logic = `
-  * Register a new entry action
-  perdat add <action>
-  `
+// TODO: perdat add created pull request -d yesterday
 
-// addCmd represents the add command
-var addCmd = &cobra.Command{
+// add represents the add command
+var add = &cobra.Command{
 	Use:   "add",
-	Short: "perdat add <action>",
-	Long:  `Register a new entry action`,
+	Short: "add - Registers a new fact",
+	Example: fmt.Sprintf(
+		"  %s\n  %s",
+		"perdat add headache",
+		"perdat add cinema 27/12/20"),
+
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add called")
+		fmt.Println(args)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(addCmd)
+	root.AddCommand(add)
+	// * Flags and configuration settings * //
+	// Persistent Flags work for this command and all subcommands
+	add.PersistentFlags().Args()
+	// Local flags which will only run when this command is called directly
+	add.Flags().StringP(
+		"date", "d", "time.Now()", "registers a datetime of a fact")
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// addCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

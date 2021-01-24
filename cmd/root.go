@@ -27,21 +27,23 @@ import (
 
 var cfgFile string
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
+// root represents the base command when called without any subcommands
+var root = &cobra.Command{
 	Use:   "perdat",
 	Short: "Know yourself",
-	Long: `A CLI tool that registers information about your daily life.
-It collects the provided data inputed by the user and stores in a single sqlite file.
-With that data, you can get some insights and know yourself, then, keep learning.`,
+	Long: `
+	A CLI tool that registers information about your daily life.
+	It collects the provided data inputed by the user and stores in a single sqlite file.
+	With that data, you can get some insights and know yourself, then, keep learning.
+	`,
 	// if has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
+// This is called by main.main(). It only needs to happen once to the root.
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if err := root.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -52,9 +54,10 @@ func init() {
 
 	// Here you define your flags and configuration settings.
 	// persistent flags will be global for your application.
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.perdat.yaml)")
+	root.PersistentFlags().StringVar(
+		&cfgFile, "config", "", "config file (default is $HOME/.perdat.yaml)")
 	// local flags will only run when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	root.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 // initConfig reads in config file and ENV variables if set.

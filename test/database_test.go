@@ -15,13 +15,11 @@ type TestDB struct {
 }
 
 func Test_DBconnection(t *testing.T) {
-	var (
-		f = "perdat.db"
-		i = TestDB{
-			file:     f,
-			hasError: false,
-		}
-	)
+	f := "perdat.db"
+	i := TestDB{
+		file:     f,
+		hasError: false,
+	}
 	result, err := database.Connect()
 	if err != nil {
 		t.Errorf(`

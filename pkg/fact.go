@@ -38,8 +38,8 @@ func (f *Fact) Create() error {
 }
 
 func (f *Fact) String() string {
-	return fmt.Sprintf(`
-	Name:     %v
-	DateTime: %v
-	`, f.Name, f.DateTime)
+	return fmt.Sprintf(
+		`Name:     %v
+		DateTime: %v`,
+		f.Name, f.DateTime)
 }

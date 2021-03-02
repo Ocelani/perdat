@@ -13,7 +13,7 @@ import (
 type Fact struct {
 	ID        uint `gorm:"primaryKey"`
 	Name      string
-	DateTime  time.Time // (default time.Now)
+	DateTime  time.Time // default is time.Now
 	CratedAt  time.Time
 	UpdatedAt time.Time
 }

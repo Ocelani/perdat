@@ -19,24 +19,51 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Ocelani/perdat/internal"
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
 
+var (
+	newF    bool
+	listF   bool
+	editF   bool
+	removeF bool
+)
+
 // root represents the base command when called without any subcommands
 var root = &cobra.Command{
-	Use:   "perdat",
+	Use:   "pdt",
 	Short: "Know yourself",
 	Long: `
 	A CLI tool that registers information about your daily life privately.
 	The user provides an input and the app stores in a sqlite file.
 	With that data, you can get some insights about yourself.
 	`,
+	Run: func(cmd *cobra.Command, args []string) {
+		var op string
+		switch {
+		case newF:
+			op = "new"
+		case listF:
+			op = "list"
+		case editF:
+			op = "edit"
+		case removeF:
+			op = "remove"
+		default:
+		}
+		internal.FactHandler(op, args)
+	},
 }
 
 func Execute() {
+	root.Flags().BoolVarP(&newF, "new", "n", newF, "add new facts")
+	root.Flags().BoolVarP(&listF, "list", "l", listF, "list facts")
+	root.Flags().BoolVarP(&editF, "edit", "e", editF, "edit a fact")
+	root.Flags().BoolVarP(&removeF, "remove", "r", removeF, "remove facts")
 	cobra.CheckErr(root.Execute())
 }
 

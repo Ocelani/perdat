@@ -9,7 +9,8 @@ import (
 type Service interface {
 	Create(*[]entity.Counter) error
 	Read(*[]entity.Counter) error
-	Update(UpdateCounterNames) (*[]entity.Counter, error)
+	UpdateCount(UpdateCounterInt) (*[]entity.Counter, error)
+	UpdateNames(UpdateCounterNames) (*[]entity.Counter, error)
 	Delete(*[]entity.Counter) error
 }
 
@@ -37,7 +38,27 @@ func (s *serv) Create(counters *[]entity.Counter) error {
 	return s.repo.Create(counters)
 }
 
-func (s *serv) Update(update UpdateCounterNames) (*[]entity.Counter, error) {
+func (s *serv) UpdateCount(update UpdateCounterInt) (*[]entity.Counter, error) {
+	cs := []entity.Counter{}
+
+	for str, num := range update {
+		c := []entity.Counter{*entity.NewCounter(str)}
+
+		if err := s.Read(&c); err != nil {
+			continue
+		}
+		c[0].CountNum = num
+
+		if err := s.repo.Update(&c[0]); err != nil {
+			continue
+		}
+		cs = append(cs, entity.Counter{})
+	}
+
+	return &cs, nil
+}
+
+func (s *serv) UpdateNames(update UpdateCounterNames) (*[]entity.Counter, error) {
 	var (
 		counters  = []entity.Counter{}
 		counterCH = make(chan entity.Counter)

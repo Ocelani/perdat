@@ -18,7 +18,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/Ocelani/perdat/internal"
+	"github.com/Ocelani/perdat/pkg/counter"
 	"github.com/spf13/cobra"
 )
 
@@ -27,10 +27,12 @@ var (
 	counterListF   bool
 	counterEditF   bool
 	counterRemoveF bool
+	counterAddF    bool
+	counterSubF    bool
 )
 
-// counter represents the commands for Counter entity.
-var counter = &cobra.Command{
+// counterCmd represents the commands for Counter entity.
+var counterCmd = &cobra.Command{
 	Use:   "counter",
 	Short: "activity to be incremented or decremented like a counter",
 	Example: fmt.Sprintf(
@@ -41,6 +43,15 @@ var counter = &cobra.Command{
 		switch {
 		case counterNewF:
 			op = "new"
+
+		case counterAddF:
+			op = "add"
+			up := counter.MakeMapUpdateInt(args)
+
+		case counterSubF:
+			op = "sub"
+			up := counter.MakeMapUpdateInt(args)
+
 		case counterListF:
 			op = "list"
 		case counterEditF:
@@ -50,14 +61,13 @@ var counter = &cobra.Command{
 		default:
 			op = ""
 		}
-		internal.FactHandler(op, args)
 	},
 }
 
 func init() {
-	counter.Flags().BoolVarP(&counterNewF, "new", "n", counterNewF, "add new counters")
-	counter.Flags().BoolVarP(&counterListF, "list", "l", counterListF, "list counters")
-	counter.Flags().BoolVarP(&counterEditF, "edit", "e", counterEditF, "edit a counter")
-	counter.Flags().BoolVarP(&counterRemoveF, "remove", "r", counterRemoveF, "remove counters")
-	root.AddCommand(counter)
+	counterCmd.Flags().BoolVarP(&counterNewF, "new", "n", counterNewF, "add new counters")
+	counterCmd.Flags().BoolVarP(&counterListF, "list", "l", counterListF, "list counters")
+	counterCmd.Flags().BoolVarP(&counterEditF, "edit", "e", counterEditF, "edit a counter")
+	counterCmd.Flags().BoolVarP(&counterRemoveF, "remove", "r", counterRemoveF, "remove counters")
+	root.AddCommand(counterCmd)
 }

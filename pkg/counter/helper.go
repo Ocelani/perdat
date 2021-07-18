@@ -2,22 +2,43 @@ package counter
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/Ocelani/perdat/pkg/entity"
 )
 
-type UpdateCounterNames map[string]string
+type (
+	UpdateCounterNames map[string]string
+	UpdateCounterInt   map[string]int
+)
 
 // MakeMapUpdate returns a new UpdateCounterNames from a list of old, new string
 // pairs. Replacements are performed in the order they appear in the
 // target string, without overlapping matches. The old string
 // comparisons are done in argument order.
-func MakeMapUpdate(oldnew []string) UpdateCounterNames {
+func MakeMapUpdateNames(oldnew []string) UpdateCounterNames {
 	update := UpdateCounterNames{}
 	for i := 1; i <= len(oldnew); i++ {
 		update[oldnew[i-1]] = oldnew[i]
 	}
 	return update
+}
+
+func MakeMapUpdateInt(args []string) UpdateCounterInt {
+	setNums := UpdateCounterInt{}
+
+	for i, a := range args {
+		n, err := strconv.Atoi(a)
+
+		if err != nil {
+			setNums[a] = 1
+		} else {
+			name := args[i-1]
+			setNums[name] = n
+		}
+	}
+
+	return setNums
 }
 
 // ExcludeExistingCounters compares both slices according to its counter names

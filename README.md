@@ -16,7 +16,7 @@ Know yourself and happy hacking!
 
 - **FACT**: Any default life event to be registered
 
-- **COUNTER**: Used to increment or decrement like a counter. Each count corresponds to a Fact.
+- **COUNTER**: Used to increment or decrement like a counter. Each count corresponds to a Fact, however, the Counter itself is not a Fact.
 
 - **HABIT**: A scheduled routine activity to be set as a target and marked as done. It inherits from Counter.
 
